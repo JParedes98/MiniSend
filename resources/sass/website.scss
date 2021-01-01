@@ -1,0 +1,269 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+
+//--------------------------------------------------- STYLES ---------------------------------------------------
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+#navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: block;
+    transition: 0.3s;
+    z-index: 999999999;
+
+    .navbar-brand {
+        img {
+            width: 45px;
+        }
+        span {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: white;
+        }
+    }
+
+    .nav-link {
+        padding: 4px 15px;
+        margin: 0px 7px;
+        font-size: 1rem;
+        font-weight: 550;
+        border-radius: 25px;
+        border: 2px solid $primary;
+
+        &:hover {
+            background: $primary;
+            transition: 0.4s;
+            color: white;
+        }
+    }
+}
+
+.navbar-scrolled {
+    background: $primary !important;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+
+    .nav-link {
+        border: 2px solid rgba(255, 255, 255, 0.5) !important;
+        color: rgba(255, 255, 255, 0.5);
+
+        &:hover {
+            background: white;
+            border: 2px solid white;
+            color: white;
+            transition: 0.4s;
+        }
+    }
+}
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 50vh;
+    background-image: url('/images/website/hero-section.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+
+    .overlay {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: lighten($color: $primary, $amount: 20%);
+        opacity: 0.4;
+    }
+
+    .overlay-img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background-image: url('/images/website/footer-bg.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;    
+    }
+
+    .hero-content {
+        display: inline;
+        text-align: center;
+        margin: auto;
+        padding-top: 40px;
+        z-index: 9999;
+        max-width: 720px;
+
+        h2 {
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+
+            span {
+                color: $primary;
+            }
+        }
+
+        p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: rgba(250, 250, 250, 0.90);
+        }
+    }
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    max-width: 140px;
+    border-radius: 10px;
+    background-color: $primary;
+    margin-top: 0px;
+}
+
+.icon {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background: none;
+    padding: 10px 17px;
+    font-size: 2rem;
+    border-radius: 50px;
+    border: 1px solid $primary;
+    color: $primary;
+
+    &:hover {
+        background: $primary;
+        color: white;
+        transition: 0.4s;
+    }
+}
+
+.section-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 50vh;
+    background-image: url('/images/website/section-info.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+
+footer {
+    background: $primary;
+    padding: 40px 0px;
+    margin: 0px;
+    display: block;
+    display: block;
+    position: relative;
+    min-height: 45vh;
+}
+
+footer .overlay {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+footer .bg-image {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/website/footer-bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+    filter: FlipV;
+    -ms-filter: "FlipV";
+}
+
+footer p {
+    color: white;
+    font-size: 1.0rem;
+}
+
+footer .footer-social-media {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+
+footer .footer-social-media li {
+    list-style: none;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin: 0px 7px 0px 7px;
+    z-index: 10;
+    border-radius: 20px;
+}
+
+footer .footer-social-media li:hover {
+    background-color: white;
+    transition: 0.5s;
+}
+
+footer .footer-social-media li:hover a {
+    color: darken($color: $primary, $amount: 10%);
+    transition: 0.5s;
+}
+
+footer .footer-social-media li a {
+    color: white;
+    padding: 9px;
+    font-size: 1.3rem;
+    line-height: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.auth {
+    height: 100vh;
+    width: 100%;
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0px 7px 20px 0px rgba(0, 0, 0,0.3);
+        -webkit-box-shadow: 0px 7px 20px 0px rgba(0, 0, 0,0.3);
+        -moz-box-shadow: 0px 7px 20px 0px rgba(0, 0, 0,0.3);
+    }
+}
+
+.auth-bg {
+    background-image: url('/images/website/auth-bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
