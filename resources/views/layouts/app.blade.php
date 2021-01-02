@@ -9,6 +9,7 @@
 
     <title>{{ config('app.name', 'MiniSend') }}</title>
     <meta name="logged-in-user-id" content="{{ Auth::check() ? Auth::user()->id : null}}">
+    <meta name="logged-in-user-api-token" content="{{ Auth::check() ? Auth::user()->api_token : null}}">
     <meta name="logged-in-user-name" content="{{ Auth::check() ? Auth::user()->name : null}}">
     <meta name="logged-in-user-email" content="{{ Auth::check() ? Auth::user()->email : null}}">
 
