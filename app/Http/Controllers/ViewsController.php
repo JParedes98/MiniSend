@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Models\EmailRecipient;
+use App\Models\EmailTemplate;
+use App\Models\EmailActivity;
+use App\Models\EmailAttachment;
 use Illuminate\Http\Request;
 
 class ViewsController extends Controller

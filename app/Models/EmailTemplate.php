@@ -14,4 +14,13 @@ class EmailTemplate extends Model
     protected $fillable = [
         'user_owner_id', 'content'
     ];
+
+    // RELATIONSHIPS
+    public function owner(){
+        return $this->belongsTo('App\Models\User', 'user_owner_id');
+    }
+
+    public function emails(){
+        return $this->hasMany('App\Models\EmailActivity', 'template_id');
+    }
 }

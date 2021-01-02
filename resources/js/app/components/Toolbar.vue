@@ -32,8 +32,8 @@
 
     <div class="col-sm-12 text-center col-md-6 text-md-right user-profile">
         <span style="font-size:18px; vertical-align:middle;">
-            <a href="#">
-                JOSE PAREDES
+            <a href="#" v-b-tooltip.hover :title="user.email">
+                {{ user.name }}
             </a>
         </span>
     </div>
@@ -42,8 +42,17 @@
 
 <script>
     export default {
+        data() {
+            return {
+                user: {
+                    'name': $("meta[name=logged-in-user-name]").attr('content'),
+                    'email': $("meta[name=logged-in-user-email]").attr('content')
+                },
+            }
+        },
+
         props: [
-            'user', 'page'
+            'page'
         ],
     }
 </script>

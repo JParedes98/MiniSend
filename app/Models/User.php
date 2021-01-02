@@ -40,4 +40,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // RELATIONSHIPS
+    public function templates(){
+        return $this->hasMany('App\Models\EmailTemplate', 'user_owner_id');
+    }
+
+    public function sent_emails(){
+        return $this->hasMany('App\Models\EmailActivity', 'sender_user_id');
+    }
+
+    public function contacts(){
+        return $this->belongsToMany('App\Models\EmailRecipient', 'user_related_contacts', 'user_id', 'recipient_id');
+    }
 }

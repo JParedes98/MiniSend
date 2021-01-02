@@ -14,4 +14,12 @@ class EmailRecipient extends Model
     protected $fillable = [
         'related_user_id', 'email'
     ];
+
+    public function related_user(){
+        return $this->belongsToMany('App\Models\User', 'user_related_contacts', 'user_id', 'recipient_id');
+    }
+
+    public function related_emails(){
+        return $this->belongsToMany('App\Models\EmailActivity', 'email_related_recipients', 'email_id', 'recipient_id');
+    }
 }

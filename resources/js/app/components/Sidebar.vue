@@ -7,11 +7,11 @@
 
             <div class="my-4 text-center">
                 <h4 class="m-0 p-0">
-                    Jose Paredes
+                    {{ user.name }}
                 </h4>
-                <a href="" class="admin-link">
-                    <i class="fas fa-crown"></i>&nbsp;ADMIN
-                </a>
+                <span class="admin-link">
+                    {{ user.email }}
+                </span>
 
                 <br>
             </div>
@@ -96,8 +96,17 @@
 
 <script>
     export default {
+        data() {
+            return {
+                user: {
+                    'name': $("meta[name=logged-in-user-name]").attr('content'),
+                    'email': $("meta[name=logged-in-user-email]").attr('content')
+                },
+            }
+        },
+
         props: [
-            'user', 'page'
+            'page'
         ],
     }
 </script>

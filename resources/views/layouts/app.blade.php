@@ -7,7 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MiniSend') }}</title>
+    <meta name="logged-in-user-id" content="{{ Auth::check() ? Auth::user()->id : null}}">
+    <meta name="logged-in-user-name" content="{{ Auth::check() ? Auth::user()->name : null}}">
+    <meta name="logged-in-user-email" content="{{ Auth::check() ? Auth::user()->email : null}}">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
