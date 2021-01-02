@@ -16,21 +16,10 @@
                     </div>
                 
                     <div class="form-group">
-                        <label class="font-weight-bold text-muted" for="first_name">NOMBRE</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control @error('first_name') is-invalid @enderror" placeholder="ej, Jose Francisco" value="{{ old('first_name') }}" autocomplete="first_name" autofocus>
-                
-                        @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                
-                    <div class="form-group">
-                        <label class="font-weight-bold text-muted" for="last_name">APELLIDOS</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control @error('last_name') is-invalid @enderror" placeholder="Ej, Paredes Rosa" value="{{ old('last_name') }}" autocomplete="last_name">
-                
-                        @error('last_name')
+                        <label class="font-weight-bold text-muted" for="name">NOMBRE</label>
+                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="ej, Jose Paredes" value="{{ old('name') }}" autocomplete="name" autofocus>
+
+                        @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -72,13 +61,13 @@
 
                     <br>
 
-                    <b-button pill variant="primary" type="submit">
+                    <b-button pill variant="outline-primary" type="submit">
                         CREAR CUENTA
                     </b-button>
                 
                     <hr class="my-3">
                 
-                    <b-button pill variant="outline-secondary" href="{{ route('website') }}">
+                    <b-button pill variant="secondary" href="{{ route('website') }}">
                         REGRESAR
                     </b-button>
                 </form>
