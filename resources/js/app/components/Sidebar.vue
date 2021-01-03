@@ -17,31 +17,12 @@
             </div>
 
             <ul>
-                <router-link to="/templates" tag="li" v-b-toggle.templates_menu>
+                <router-link to="/templates" tag="li">
                     <a href="#">
                         <i class="far fa-copy"></i>
                         &nbsp;TEMPLATES&nbsp;
-                        <i class="fas fa-arrow-circle-down float-right" style="margin-top:5px; margin-right:10px;"></i>
                     </a>
                 </router-link>
-
-                <b-collapse id="templates_menu">
-                    <ul class="dropdown_menu">
-                        <li class="">
-                            <a href="">
-                                <i class="fas fa-book-reader"></i>
-                                &nbsp;ADMISIONES
-                            </a>
-                        </li>
-
-                        <li class="">
-                            <a href="">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                &nbsp;MATRICULA
-                            </a>
-                        </li>
-                    </ul>
-                </b-collapse>
 
                 <router-link to="/emails" tag="li" v-b-toggle.emails_menu>
                     <a href="#">
@@ -54,16 +35,16 @@
                 <b-collapse id="emails_menu">
                     <ul class="dropdown_menu">
                         <li class="">
-                            <a href="">
-                                <i class="fas fa-book-reader"></i>
-                                &nbsp;ADMISIONES
+                            <a href="#">
+                                <i class="fas fa-inbox"></i>
+                                &nbsp;INBOX
                             </a>
                         </li>
 
                         <li class="">
-                            <a href="">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                &nbsp;MATRICULA
+                            <a href="#">
+                                <i class="fas fa-paper-plane"></i>
+                                &nbsp;SENT
                             </a>
                         </li>
                     </ul>
@@ -71,8 +52,15 @@
 
                 <router-link to="/contacts" tag="li">
                     <a href="#">
-                        <i class="fas fa-envelope-open-text"></i>
+                        <i class="fas fa-users"></i>
                         &nbsp;CONTACTS
+                    </a>
+                </router-link>
+
+                <router-link to="/search" tag="li">
+                    <a href="#">
+                        <i class="fas fa-search"></i>
+                        &nbsp;SEARCH IN DATABASE
                     </a>
                 </router-link>
 

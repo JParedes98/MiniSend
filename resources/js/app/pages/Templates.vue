@@ -5,11 +5,22 @@
         <div class="content container-fluid">
             <toolbar :page="'templates'"></toolbar>
 
-            <h1>TEMPLATES</h1>
+            <div v-if="templates.length > 0">
+                <h1>TEMPLATES</h1>
+            </div>
 
-            <code>
-                {{ templates }}
-            </code>
+            <div class="row empty-message" v-else>
+                <div class="col-md-12">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>
+                        Upsss!
+                    </h4>
+                    <p>No Templates Found.<br>Do you want to create one?</p>
+                    <b-button to="/templates/create" pill variant="outline-primary">
+                        <span class="fas fa-plus"></span>&nbsp;CREATE
+                    </b-button>
+                </div>
+            </div>
         </div>
     </div>
 </template>

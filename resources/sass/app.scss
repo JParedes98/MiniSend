@@ -9,6 +9,7 @@
 
 @import './app/sidebar';
 @import './app/Toolbar';
+@import './app/tables';
 
 html,
 body {
@@ -19,6 +20,8 @@ body {
 
 .content {
     // padding: 15px 20px;
+    display: block;
+    position: relative;
     width: calc(100% - 300px);
     margin-left: 300px;
     overflow: auto;
@@ -40,4 +43,32 @@ body {
     opacity: 0.2;
     margin-top: 25px;
     margin-bottom: 25px;
+}
+
+.empty-message {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 60px);
+
+    i {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 4.5rem;
+        color: $primary;
+    }
+
+    h4 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: $primary;
+    }
+
+    p {
+        font-size: 1.3rem;
+    }
+}
+
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.65);
 }

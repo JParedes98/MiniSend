@@ -19,4 +19,10 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/GetMyTemplates', [App\Http\Controllers\Api\TemplatesController::class, 'GetMyTemplates']);
     });
 
+    Route::group(['prefix' => 'contacts'], function () {
+        Route::get('/GetMyContacts', [App\Http\Controllers\Api\ContactsController::class, 'GetMyContacts']);
+        Route::post('/SaveContact', [App\Http\Controllers\Api\ContactsController::class, 'SaveContact']);
+        Route::post('/UpdateContact', [App\Http\Controllers\Api\ContactsController::class, 'UpdateContact']);
+        Route::delete('/DetachContact/{contact_id}', [App\Http\Controllers\Api\ContactsController::class, 'DetachContact']);
+    });
 });

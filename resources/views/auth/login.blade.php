@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row justify-content-center align-items-center vh-100">
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <form method="POST" action="{{ route('login') }}" class="card card-body" data-aos="fade-up">
+                <form method="POST" action="{{ route('login') }}" class="card card-body">
                     @csrf
     
                     <div class="form-group">
