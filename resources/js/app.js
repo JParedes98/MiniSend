@@ -27,14 +27,15 @@ Vue.use(VueSweetalert2);
 const routes = [
     { path: '/', redirect: '/templates' },
 
-    { path: '/templates', component: require('./app/pages/Templates.vue').default },
-        { path: '/templates/create', component: require('./app/pages/templates/CreateTemplate.vue').default },
+    { path: '/templates', name: 'templates', component: require('./app/pages/Templates.vue').default },
+        { path: '/templates/create', name: 'template_create', component: require('./app/pages/templates/CreateTemplate.vue').default },
+        { path: '/templates/update/:template_id', name: 'template_update', component: require('./app/pages/templates/UpdateTemplate.vue').default },
 
-    { path: '/emails', component: require('./app/pages/Emails.vue').default },
+    { path: '/emails', name: 'emails', component: require('./app/pages/Emails.vue').default },
 
-    { path: '/contacts', component: require('./app/pages/Contacts.vue').default },
+    { path: '/contacts', name: 'contacts', component: require('./app/pages/Contacts.vue').default },
 
-    { path: '/search', component: require('./app/pages/Search.vue').default },
+    { path: '/search', name: 'search', component: require('./app/pages/Search.vue').default },
 ];
 
 const router = new VueRouter({

@@ -17,22 +17,15 @@
             </div>
 
             <ul>
-                <router-link to="/templates" tag="li">
-                    <a href="#">
-                        <i class="far fa-copy"></i>
-                        &nbsp;TEMPLATES&nbsp;
-                    </a>
-                </router-link>
-
-                <router-link to="/emails" tag="li" v-b-toggle.emails_menu>
+                <router-link to="/emails" tag="li">
                     <a href="#">
                         <i class="fas fa-envelope-open-text"></i>
                         &nbsp;EMAILS&nbsp;
-                        <i class="fas fa-arrow-circle-down float-right" style="margin-top:5px; margin-right:10px;"></i>
+                        <i class="fas fa-arrow-circle-down float-right" v-b-toggle.emails_menu style="margin-top:5px; margin-right:10px;"></i>
                     </a>
                 </router-link>
 
-                <b-collapse id="emails_menu">
+                <b-collapse visible id="emails_menu">
                     <ul class="dropdown_menu">
                         <li class="">
                             <a href="#">
@@ -49,6 +42,13 @@
                         </li>
                     </ul>
                 </b-collapse>
+
+                <router-link to="/templates" tag="li">
+                    <a href="#">
+                        <i class="far fa-copy"></i>
+                        &nbsp;TEMPLATES&nbsp;
+                    </a>
+                </router-link>
 
                 <router-link to="/contacts" tag="li">
                     <a href="#">

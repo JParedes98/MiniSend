@@ -12,7 +12,7 @@ class EmailTemplate extends Model
 
     /** The attributes that are mass assignable.*/
     protected $fillable = [
-        'user_owner_id', 'content'
+        'user_owner_id', 'name', 'content'
     ];
 
     // RELATIONSHIPS

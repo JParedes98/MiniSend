@@ -227,11 +227,12 @@
             },
 
             UpdateContact() {
-                var formData = new FormData();
-                formData.append('email', this.selected.email);
-                formData.append('new_email', this.selected.new);
+                var contact = {
+                    email: this.selected.email,
+                    new_email: this.selected.new,
+                }
 
-                axios.post('/api/contacts/UpdateContact', formData)
+                axios.put('/api/contacts/UpdateContact', contact)
                     .then(res => {
                         if (res.status == 200) {
                             var index = this.contacts.findIndex(contact => contact.id === this.selected.id);

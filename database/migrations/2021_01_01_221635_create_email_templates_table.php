@@ -16,6 +16,7 @@ class CreateEmailTemplatesTable extends Migration
         Schema::create('email_templates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_owner_id');
+            $table->string('name', 100);
             $table->longText('content');
             $table->timestamps();
         });

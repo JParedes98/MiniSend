@@ -7,7 +7,7 @@
 
             <div class="row justify-content-center text-primary mt-5">
                 <div class="col-md-8 col-sm-12">
-                    <h1 class="font-weight-bold">Create New Template</h1>
+                    <h1 class="font-weight-bold">Edit Template</h1>
                     <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente labore itaque dolorem dignissimos culpa!.</p>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
-                    <b-button pill variant="primary" @click="SaveTemplate()" class="d-block ml-auto">SAVE TEMPLATE</b-button>
+                    <b-button pill variant="primary" @click="UpdateTemplate()" class="d-block ml-auto">UPDATE TEMPLATE</b-button>
                 </div>
             </div>
 
@@ -58,62 +58,35 @@
 
         data() {
             return {
-                template: {
-                    'name': '',
-                    'content' :
-                            `
-                                <p style="text-align: center;">
-                                    <img title="TinyMCE Logo" src="/images/logo.svg" alt="" width="110" height="97">
-                                </p>
-                                <h2 style="text-align: center;">This is a Demo Template</h2>
-
-                                <h5 style="text-align: center;">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo facere, debitis tenetur aliquid repellat eligendi earum.
-                                </h5>
-
-                                <h2>Got questions or need help?</h2>
-                                <ul>
-                                    <li>Our documentation is a great resource for learning how to configure MiniSend.</li>
-                                    <li>Have a specific question? Try the MiniSend tag at Stack Overflow</li>
-                                    <li>We also offer enterprise grade support as part of TinyMCE premium subscriptions</li>
-                                </ul>
-
-                                <h3>A simple table to play with</h3>
-                                <table style="border-collapse: collapse; width: 100%;" border="1">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Cost</th>
-                                            <th>Really?</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>MiniSend</td>
-                                            <td>Get started for free</td>
-                                            <td>YES!</td>
-                                        </tr>
-                                        <tr>
-                                            <td>MiniSend</td>
-                                            <td>Free</td>
-                                            <td>YES!</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo facere, debitis tenetur aliquid repellat eligendi earum. Quidem, in tempora, qui autem omnis ullam sint ex dolorum, reprehenderit animi a ea.</p>
-                                <p>Thanks for using MiniSend!</p>
-                            `
-                }
+                template: [],
             }
         },
 
-        methods: {
-            SaveTemplate() {
-                var formData = new FormData();
-                formData.append('name', this.template.name);
-                formData.append('content', this.template.content);
+        created() {
+            this.GetTemplate();
+        },
 
-                axios.post('/api/templates/SaveTemplate', formData)
+        methods: {
+            GetTemplate() {
+                var template_id = this.$route.params.template_id;
+
+                axios.get(`/api/templates/GetTemplate/${template_id}`)
+                    .then(res => {
+                        this.template = res.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+
+            UpdateTemplate() {
+                var template = {
+                    template_id: this.template.id,
+                    name: this.template.name,
+                    content: this.template.content
+                }
+
+                axios.put('/api/templates/UpdateTemplate', template)
                     .then(res => {
                         if (res.status == 200) {
                             Vue.swal({
