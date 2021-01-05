@@ -29,6 +29,7 @@ const routes = [
 
     { path: '/emails', name: 'emails', component: require('./app/pages/Emails.vue').default },
         { path: '/email/create', name: 'emails_create', component: require('./app/pages/Emails/CreateEmail.vue').default },
+        { path: '/email/preview/:email_id', name: 'emails_preview', component: require('./app/pages/Emails/FullPageEmailPreview.vue').default },
 
     { path: '/templates', name: 'templates', component: require('./app/pages/Templates.vue').default },
         { path: '/templates/create', name: 'template_create', component: require('./app/pages/templates/CreateTemplate.vue').default },

@@ -24,7 +24,7 @@ class EmailActivity extends Model
         return $this->belongsTo('App\Models\Recipient', 'recipient_id');
     }
 
-    public function attachments(){
-        return $this->hasMany('App\Models\EmailAttachment', 'email_id');
+    public function attachment(){
+        return $this->hasOne('App\Models\EmailAttachment', 'email_id');
     }
 }

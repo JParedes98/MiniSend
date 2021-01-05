@@ -8,12 +8,11 @@
             <div class="row justify-content-center text-primary mt-5">
                 <div class="col-md-8 col-sm-12">
                     <h1 class="font-weight-bold"><i class="fas fa-paper-plane"></i> Send Mail</h1>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente labore
-                        itaque dolorem dignissimos culpa!.</p>
+                    <p class="text-muted">Let's fill the form to send your email</p>
                 </div>
             </div>
 
-            <div class="row justify-content-center mb-3">
+            <div class="row justify-content-center align-items-start mb-3">
                 <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label class="text-muted font-weight-bold" for="mail.sender">From</label>
@@ -36,13 +35,24 @@
                 </div>
             </div>
 
-            <div class="row mb-5">
-                <div class="col-md-4 offset-md-2 col-sm-12">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-4 col-sm-12">
                     <label class="text-muted font-weight-bold" for="mail.subject">Subject</label>
                     <input type="text" class="form-control"
                         :class="{ 'is-invalid': validation.hasError('mail.subject')}" id="mail.subject"
                         v-model="mail.subject" placeholder="Ex: Welcome Mail">
                     <div class="text-danger font-weight-bold">{{ validation.firstError('mail.subject') }}</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="text-muted font-weight-bold" for="mail.attachment">Attachment</label>
+                    <b-form-file
+                        v-model="mail.attachment"
+                        :state="Boolean(mail.attachment)"
+                        id="mail.attachment"
+                        placeholder="Choose a file or drop it here..."
+                        drop-placeholder="Drop file here..."
+                    ></b-form-file>
                 </div>
             </div>
 
@@ -97,6 +107,7 @@
                     <div class="form-group">
                         <label class="font-weight-bold text-muted">Select Email Template</label>
                         <b-form-select v-model="selected_template">
+                            <b-form-select-option :value="null">Blank Email</b-form-select-option>
                             <b-form-select-option :value="template" v-for="template in templates" :key="template.id">{{ template.name }}</b-form-select-option>
                         </b-form-select>
                     </div>
@@ -142,6 +153,7 @@
                     subject: '',
                     text: '',
                     recipient: '',
+                    attachment: null,
                 },
 
                 templates: [],
@@ -213,6 +225,10 @@
                     formData.append('html', this.mail.html);
                     formData.append('recipient', this.mail.recipient);
 
+                    if(this.mail.attachment != null) {
+                        formData.append('file', this.mail.attachment);
+                    }
+
                     axios.post('/api/emails/SaveAndSendEmail', formData)
                         .then(res => {
                             if (res.status == 200) {
@@ -246,7 +262,9 @@
 
         watch: {
             selected_template: function (newValue, oldValue) {
-                this.mail.html = newValue.content;
+                if(newValue != null) {
+                    this.mail.html = newValue.content;
+                }
             }
         }
     }

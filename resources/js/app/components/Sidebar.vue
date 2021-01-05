@@ -20,7 +20,7 @@
                 <router-link to="/emails" tag="li">
                     <a href="#">
                         <i class="fas fa-envelope-open-text"></i>
-                        &nbsp;EMAILS&nbsp;
+                        &nbsp;MY EMAILS&nbsp;
                     </a>
                 </router-link>
 
@@ -41,7 +41,7 @@
                 <router-link to="/search" tag="li">
                     <a href="#">
                         <i class="fas fa-search"></i>
-                        &nbsp;SEARCH IN DATABASE
+                        &nbsp;ALL EMAILS
                     </a>
                 </router-link>
 

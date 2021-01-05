@@ -9,7 +9,7 @@
                 <div class="col-md-4 my-2">
                     <div class="card card-body mb-3">
                         <div class="d-flex justify-content-between align-items-center" style="font-size: 1.2rem;">
-                            <span><strong>Emails</strong></span>
+                            <span><strong>My Emails Feed</strong></span>
                             <router-link to="/email/create" tag="span" class="text-primary" style="cursor:pointer;">
                                 <i class="fas fa-edit"></i>
                             </router-link>
@@ -24,7 +24,6 @@
                                         Subject: <span class="text-muted">{{ email.subject }}</span>
                                     </strong>
                                     <strong class="d-block text-muted" v-else>No Subject</strong>
-
                                     <br>
 
                                     <strong class="d-block">

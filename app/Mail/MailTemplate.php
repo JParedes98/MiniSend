@@ -14,16 +14,18 @@ class MailTemplate extends Mailable
     public $mail;
     public $sender;
     public $recipient;
+    public $attachment;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mail, $sender, $recipient) {
+    public function __construct($mail, $sender, $recipient, $attachment) {
         $this->mail         = $mail;
         $this->sender       = $sender;
         $this->recipient    = $recipient;
+        $this->attachment    = $attachment;
     }
 
     /**

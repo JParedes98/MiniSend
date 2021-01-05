@@ -4,6 +4,9 @@
             <div class="d-flex justify-content-between align-items-center" style="font-size: 1.2rem;">
                 <span v-if="email.subject">{{ email.subject }}</span>
                 <span v-else class="text-muted">No Subject</span>
+                <router-link tag="span" style="cursor: pointer;" :to="'/email/preview/' + email.id" class="text-primary">
+                    <i class="fas fa-eye" v-b-tooltip.hover title="Preview"></i>
+                </router-link>
             </div>
         </div>
         <div class="card card-body">
@@ -21,7 +24,12 @@
             </div>
 
             <br>
+
             <div v-html="email.html"></div>
+
+            <hr>
+                <p>{{ email.text }}</p>
+            <br>
         </div>
     </div>
 </template>

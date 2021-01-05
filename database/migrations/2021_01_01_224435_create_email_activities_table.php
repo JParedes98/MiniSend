@@ -17,6 +17,7 @@ class CreateEmailActivitiesTable extends Migration
             $table->string('subject', 250)->nullable();
             $table->longText('text')->nullable();
             $table->longText('html')->nullable();
+            $table->string('status', 25)->default('POSTED');
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('recipient_id');
             $table->timestamps();

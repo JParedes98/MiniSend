@@ -17,5 +17,11 @@
     @if ($mail->html)
         {!! $mail->html !!}
     @endif
+
+    @if($mail->attachment)
+        <hr>
+        <a href="{{ env('APP_URL') . '/attachments/GetFile/' . $mail->attachment->id }}">This email has an attachment, click this link to open it.</a>
+    @endif
+
 </body>
 </html>
