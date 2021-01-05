@@ -70,7 +70,7 @@
                     'content' :
                             `
                                 <p style="text-align: center;">
-                                    <img title="TinyMCE Logo" src="/images/logo.svg" alt="" width="110" height="97">
+                                    <img title="TinyMCE Logo" src="localhost:8000/images/logo.svg" alt="" width="110" height="97">
                                 </p>
                                 <h2 style="text-align: center;">This is a Demo Template</h2>
 

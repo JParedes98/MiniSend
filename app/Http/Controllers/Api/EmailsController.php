@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use Mail;
 use Auth;
 use App\Models\User;
+use App\Mail\MailTemplate;
 use Illuminate\Http\Request;
 use App\Models\EmailActivity;
 use App\Models\Recipient;
@@ -83,6 +85,10 @@ class EmailsController extends Controller
             'sender_id' => $user->id,
             'recipient_id' => $contact->id,
         ]);
+
+        $data = EmailActivity::find($mail->id);
+
+        Mail::send(new MailTemplate($data, $data->sender, $data->recipient));
 
         return response()->json($mail, 200);
     }

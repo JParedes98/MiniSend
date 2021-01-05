@@ -36,22 +36,17 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center mb-5">
-                <div class="col-md-4 col-sm-12">
+            <div class="row mb-5">
+                <div class="col-md-4 offset-md-2 col-sm-12">
                     <label class="text-muted font-weight-bold" for="mail.subject">Subject</label>
                     <input type="text" class="form-control"
                         :class="{ 'is-invalid': validation.hasError('mail.subject')}" id="mail.subject"
                         v-model="mail.subject" placeholder="Ex: Welcome Mail">
                     <div class="text-danger font-weight-bold">{{ validation.firstError('mail.subject') }}</div>
                 </div>
-
-                <div class="col-md-4 col-sm-12">
-                    <label class="text-muted font-weight-bold" for="mail.subject">Default Template</label>
-                    <input type="text" class="form-control" id="mail.subject" v-model="mail.template.name" disabled>
-                </div>
             </div>
 
-            <div class="row justify-content-center align-items-center mb-3">
+            <div class="row justify-content-center align-items-center mb-2">
                 <div class="col-md-8 col-sm-12">
                     <label class="font-weight-bold text-muted" for="mail.text">Text message</label>
                     <b-form-textarea id="mail.text" v-model="mail.text"
@@ -63,9 +58,9 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-8 col-sm-12">
-                    <div class="text-danger font-weight-bold">{{ validation.firstError('mail.template.content') }}</div>
-                    <TemplateEditor v-model="mail.template.content"
-                        :class="{ 'is-invalid': validation.hasError('mail.template.content')}"
+                    <div class="text-danger font-weight-bold">{{ validation.firstError('mail.html') }}</div>
+                    <TemplateEditor v-model="mail.html"
+                        :class="{ 'is-invalid': validation.hasError('mail.html')}"
                         api-key="zewq41kg1hmlckq3auked6txoo916a3e4lrvp8h8a576gxyu" :init="{
                         menubar: true,
                         height: 400,
@@ -101,9 +96,8 @@
 
                     <div class="form-group">
                         <label class="font-weight-bold text-muted">Select Email Template</label>
-                        <b-form-select v-model="mail.template">
-                            <b-form-select-option :value="template" v-for="template in templates" :key="template.id">
-                                {{ template.name }}</b-form-select-option>
+                        <b-form-select v-model="selected_template">
+                            <b-form-select-option :value="template" v-for="template in templates" :key="template.id">{{ template.name }}</b-form-select-option>
                         </b-form-select>
                     </div>
 
@@ -143,7 +137,7 @@
         data() {
             return {
                 mail: {
-                    template: '',
+                    html: '',
                     sender: $("meta[name=logged-in-user-email]").attr('content'),
                     subject: '',
                     text: '',
@@ -151,6 +145,7 @@
                 },
 
                 templates: [],
+                selected_template: '',
                 contacts: [],
             }
         },
@@ -172,7 +167,7 @@
                     .minLength(3)
                     .maxLength(250);
             },
-            'mail.template.content': function (value) {
+            'mail.html': function (value) {
                 return Validator.value(value)
                     .required()
                     .minLength(3);
@@ -215,7 +210,7 @@
                     var formData = new FormData();
                     formData.append('subject', this.mail.subject);
                     formData.append('text', this.mail.text);
-                    formData.append('html', this.mail.template.content);
+                    formData.append('html', this.mail.html);
                     formData.append('recipient', this.mail.recipient);
 
                     axios.post('/api/emails/SaveAndSendEmail', formData)
@@ -246,6 +241,12 @@
                             console.log(error);
                         });
                 }
+            }
+        },
+
+        watch: {
+            selected_template: function (newValue, oldValue) {
+                this.mail.html = newValue.content;
             }
         }
     }
