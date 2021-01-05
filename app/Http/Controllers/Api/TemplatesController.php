@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
+use App\Models\Template;
 use Illuminate\Http\Request;
-use App\Models\EmailTemplate;
 use App\Http\Controllers\Controller;
 
 class TemplatesController extends Controller
@@ -16,7 +16,7 @@ class TemplatesController extends Controller
     }
 
     public function GetTemplate($template_id) {
-        $template = EmailTemplate::findOrFail($template_id);
+        $template = Template::findOrFail($template_id);
 
         return response()->json($template, 200);
     }
@@ -27,8 +27,8 @@ class TemplatesController extends Controller
             'content' => 'required'
         ]);
 
-        $template = EmailTemplate::create([
-            'user_owner_id' => Auth::user()->id,
+        $template = Template::create([
+            'owner_id' => Auth::user()->id,
             'name' => $request->name,
             'content' => $request->content
         ]);
@@ -43,7 +43,7 @@ class TemplatesController extends Controller
             'content' => 'required'
         ]);
 
-        $template = EmailTemplate::findOrFail($request->template_id)->update([
+        $template = Template::findOrFail($request->template_id)->update([
             'name' => $request->name,
             'content' => $request->content
         ]);
@@ -52,7 +52,7 @@ class TemplatesController extends Controller
     }
 
     public function DeleteTemplate($template_id) {
-        $template = EmailTemplate::findOrFail($template_id)->delete();
+        $template = Template::findOrFail($template_id)->delete();
 
         return response()->json($template, 200);
     }

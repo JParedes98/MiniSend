@@ -13,9 +13,9 @@ class CreateEmailTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_templates', function (Blueprint $table) {
+        Schema::create('templates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_owner_id');
+            $table->unsignedBigInteger('owner_id');
             $table->string('name', 100);
             $table->longText('content');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateEmailTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_templates');
+        Schema::dropIfExists('templates');
     }
 }

@@ -7,7 +7,7 @@
 
             <div class="row justify-content-center text-primary mt-5">
                 <div class="col-md-8 col-sm-12">
-                    <h1 class="font-weight-bold">Create New Template</h1>
+                    <h1 class="font-weight-bold"><i class="far fa-copy"></i> Create New Template</h1>
                     <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente labore itaque dolorem dignissimos culpa!.</p>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="col-md-8 col-sm-12">
                     <TemplateEditor
                     v-model="template.content"
-                        api-key="localhost" :init="{
+                        api-key="zewq41kg1hmlckq3auked6txoo916a3e4lrvp8h8a576gxyu" :init="{
                         menubar: true,
                         height: 400,
                         images_upload_url: '',

@@ -12,23 +12,19 @@ class EmailActivity extends Model
 
     /** The attributes that are mass assignable.*/
     protected $fillable = [
-        'sender_user_id', 'subject', 'text', 'html'
+        'subject', 'text', 'html', 'recipient_id', 'sender_id',
     ];
 
     // RELATIONSHIPS
-    public function owner(){
-        return $this->belongsTo('App\Models\User', 'sender_user_id');
+    public function sender(){
+        return $this->belongsTo('App\Models\User', 'sender_id');
     }
 
-    public function template(){
-        return $this->belongsTo('App\Models\EmailTemplate', 'template_id');
-    }
-
-    public function recipients(){
-        return $this->belongsToMany('App\Models\EmailRecipient', 'email_related_recipients', 'email_id', 'recipient_id');
+    public function recipient(){
+        return $this->belongsTo('App\Models\Recipient', 'recipient_id');
     }
 
     public function attachments(){
-        return $this->hasMany('App\Models\EmailAttachment', 'user_owner_id');
+        return $this->hasMany('App\Models\EmailAttachment', 'email_id');
     }
 }

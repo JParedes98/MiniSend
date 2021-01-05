@@ -25,13 +25,14 @@ Vue.use(IconsPlugin);
 Vue.use(VueSweetalert2);
 
 const routes = [
-    { path: '/', redirect: '/templates' },
+    { path: '/', redirect: '/emails' },
+
+    { path: '/emails', name: 'emails', component: require('./app/pages/Emails.vue').default },
+        { path: '/email/create', name: 'emails_create', component: require('./app/pages/Emails/CreateEmail.vue').default },
 
     { path: '/templates', name: 'templates', component: require('./app/pages/Templates.vue').default },
         { path: '/templates/create', name: 'template_create', component: require('./app/pages/templates/CreateTemplate.vue').default },
         { path: '/templates/update/:template_id', name: 'template_update', component: require('./app/pages/templates/UpdateTemplate.vue').default },
-
-    { path: '/emails', name: 'emails', component: require('./app/pages/Emails.vue').default },
 
     { path: '/contacts', name: 'contacts', component: require('./app/pages/Contacts.vue').default },
 

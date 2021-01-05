@@ -21,27 +21,8 @@
                     <a href="#">
                         <i class="fas fa-envelope-open-text"></i>
                         &nbsp;EMAILS&nbsp;
-                        <i class="fas fa-arrow-circle-down float-right" v-b-toggle.emails_menu style="margin-top:5px; margin-right:10px;"></i>
                     </a>
                 </router-link>
-
-                <b-collapse visible id="emails_menu">
-                    <ul class="dropdown_menu">
-                        <li class="">
-                            <a href="#">
-                                <i class="fas fa-inbox"></i>
-                                &nbsp;INBOX
-                            </a>
-                        </li>
-
-                        <li class="">
-                            <a href="#">
-                                <i class="fas fa-paper-plane"></i>
-                                &nbsp;SENT
-                            </a>
-                        </li>
-                    </ul>
-                </b-collapse>
 
                 <router-link to="/templates" tag="li">
                     <a href="#">

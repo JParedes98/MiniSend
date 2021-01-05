@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Auth;
 use Illuminate\Http\Request;
-use App\Models\EmailRecipient;
+use App\Models\Recipient;
 use App\Http\Controllers\Controller;
 
 class ContactsController extends Controller
@@ -20,7 +20,7 @@ class ContactsController extends Controller
             'email' => 'required|string|email|max:255',
         ]);
 
-        $contact = EmailRecipient::firstOrCreate([
+        $contact = Recipient::firstOrCreate([
             'email' => $request->email
         ]);
 
@@ -45,11 +45,11 @@ class ContactsController extends Controller
 
         $user = Auth::user();
 
-        $old_contact = EmailRecipient::where('email', $request->email)->firstOrFail();
+        $old_contact = Recipient::where('email', $request->email)->firstOrFail();
 
         $user->contacts()->detach($old_contact);
 
-        $new_contact = EmailRecipient::firstOrCreate([
+        $new_contact = Recipient::firstOrCreate([
             'email' => $request->new_email
         ]);
 

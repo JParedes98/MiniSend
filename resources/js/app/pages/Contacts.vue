@@ -8,7 +8,12 @@
             <div class="my-4 mx-2" v-if="contacts.length > 0">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-md-12 mb-3">
-                        <h4 class="text-primary font-weight-bold">MY CONTACTS</h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="text-primary font-weight-bold">MY CONTACTS</h4>
+                            <b-button v-b-modal.add_contact pill variant="outline-primary">
+                                <span class="fas fa-plus"></span>&nbsp;ADD CONTACT
+                            </b-button>
+                        </div>
                     </div>
 
                     <div class="col-md-2 col-sm-12">

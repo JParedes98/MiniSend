@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,15 +44,19 @@ class User extends Authenticatable
     ];
 
     // RELATIONSHIPS
-    public function templates(){
-        return $this->hasMany('App\Models\EmailTemplate', 'user_owner_id');
+    public function sent_emails(){
+        return $this->hasMany('App\Models\EmailActivity', 'sender_id');
     }
 
-    public function sent_emails(){
-        return $this->hasMany('App\Models\EmailActivity', 'sender_user_id');
+    public function inbox_emails(){
+        return $this->hasMany('App\Models\EmailActivity', 'recipient_id');
+    }
+
+    public function templates(){
+        return $this->hasMany('App\Models\Template', 'owner_id');
     }
 
     public function contacts(){
-        return $this->belongsToMany('App\Models\EmailRecipient', 'user_related_contacts', 'user_id', 'recipient_id');
+        return $this->belongsToMany('App\Models\Recipient', 'user_contacts', 'user_id', 'recipient_id');
     }
 }

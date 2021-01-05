@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:api'])->group(function () {
 
+    Route::group(['prefix' => 'emails'], function () {
+        Route::get('/GetAllMyEmails', [App\Http\Controllers\Api\EmailsController::class, 'GetAllMyEmails']);
+        Route::get('/GetAllMyInboxEmails', [App\Http\Controllers\Api\EmailsController::class, 'GetAllMyInboxEmails']);
+        Route::get('/GetAllMySentEmails', [App\Http\Controllers\Api\EmailsController::class, 'GetAllMySentEmails']);
+        Route::post('/SaveAndSendEmail', [App\Http\Controllers\Api\EmailsController::class, 'SaveAndSendEmail']);
+    });
+
     Route::group(['prefix' => 'templates'], function () {
         Route::get('/GetMyTemplates', [App\Http\Controllers\Api\TemplatesController::class, 'GetMyTemplates']);
         Route::get('/GetTemplate/{template_id}', [App\Http\Controllers\Api\TemplatesController::class, 'GetTemplate']);
