@@ -36,7 +36,9 @@
                                     </strong>
                                 </div>
                                 <div class="text-right">
-                                    <i class="fas fa-ellipsis-v"></i>
+                                    <span>
+                                        {{ email.created_at | moment("MMM-DD-YYYY") }}s
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -66,6 +68,7 @@
 
 <script>
     import ShowEmail from "./Emails/ShowEmail";
+    import moment from 'moment';
 
     export default {
         components: {

@@ -1,5 +1,5 @@
 <!-- FOOTER -->
-<footer data-aos="fade-up" id="contact">
+<footer id="contact">
     <div class="overlay"></div>
     <div class="bg-image"></div>
 

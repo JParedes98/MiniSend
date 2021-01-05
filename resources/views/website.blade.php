@@ -178,3 +178,7 @@
     </div>
 </div>
 @endsection
+
+@section('footer')
+    @include('partials.website_footer')
+@endsection

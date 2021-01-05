@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,4 +28,5 @@ class EmailActivity extends Model
     public function attachment(){
         return $this->hasOne('App\Models\EmailAttachment', 'email_id');
     }
+
 }

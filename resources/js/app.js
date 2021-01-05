@@ -11,6 +11,7 @@ try {
     console.log(e);
 }
 
+const moment = require('moment');
 window._ = require('lodash');
 window.axios = require('axios');
 window.axios.defaults.headers.common = {
@@ -23,6 +24,9 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSweetalert2);
+Vue.use(require('vue-moment'), {
+    moment
+});
 
 const routes = [
     { path: '/', redirect: '/emails' },

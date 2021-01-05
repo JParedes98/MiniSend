@@ -20,7 +20,7 @@
                         <strong>To: {{ email.sender.email}}</strong>
                     </p>
                 </div>
-                <span>Date: December 24, 2020</span>
+                <span>Date: {{ email.created_at | moment("MMMM-DD-YYYY (HH:mm)") }}</span>
             </div>
 
             <br>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
         name: 'ShowEmail',
         props: [

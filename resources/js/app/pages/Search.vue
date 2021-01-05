@@ -5,7 +5,7 @@
         <div class="content container-fluid">
             <toolbar :page="'emails'"></toolbar>
 
-            <div class="row justify-content-between align-items-center">
+            <div class="row justify-content-between align-items-center mt-4">
                 <div class="col-md-12 mb-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-primary font-weight-bold">ADMIN EMAILS</h4>
@@ -38,14 +38,11 @@
                             :items="emails" :fields="fields" :filter="search" class="table-theme" borderless fixed
                             responsive>
 
-                            <template v-slot:cell(actions)="data">
-                                <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" no-caret>
-                                    <template #button-content>
-                                        <i class="fas fa-ellipsis-v"></i> Options
-                                    </template>
-                                    <b-dropdown-item @click="DetachContact(data.item.id)"><i class="far fa-trash-alt"></i> Delete</b-dropdown-item>
-                                </b-dropdown>
-                            </template>
+                                <template v-slot:cell(created_at)="data">
+                                    <span>
+                                        {{ data.item.created_at | moment("MMM-DD-YYYY (HH:mm)") }}
+                                    </span>
+                                </template>
                         </b-table>
 
                         <b-pagination v-model="currentPage" :total-rows="totalEmails" :per-page="perPage"
@@ -72,6 +69,7 @@
 
 <script>
     import ShowEmail from "./Emails/ShowEmail";
+    import moment from 'moment';
 
     export default {
         components: {
@@ -119,6 +117,7 @@
                     { key: 'recipient.email', label: 'Email To', sortable: true },
                     { key: 'sender.name', label: 'Sender', sortable: true },
                     { key: 'status', label: 'Status', sortable: true },
+                    { key: 'created_at', label: 'Sent at', sortable: true },
                 ],
             }
         },

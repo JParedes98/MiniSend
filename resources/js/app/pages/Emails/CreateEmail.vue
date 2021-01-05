@@ -48,7 +48,6 @@
                     <label class="text-muted font-weight-bold" for="mail.attachment">Attachment</label>
                     <b-form-file
                         v-model="mail.attachment"
-                        :state="Boolean(mail.attachment)"
                         id="mail.attachment"
                         placeholder="Choose a file or drop it here..."
                         drop-placeholder="Drop file here..."

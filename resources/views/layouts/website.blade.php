@@ -15,7 +15,6 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/utils/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('css/website.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -28,7 +27,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/utils/aos.js') }}"></script>
     <script src="https://kit.fontawesome.com/67ee180fdd.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/website.js') }}"></script>
 </body>
