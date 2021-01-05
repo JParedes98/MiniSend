@@ -72,8 +72,9 @@
 
                                     <div class="form-group">
                                         <label for="selected.new" class="font-weight-bold text-muted">Update to:</label>
-                                        <input type="email" id="selected.new" v-model="selected.new" class="form-control"
+                                        <input type="email" id="selected.new" v-model="selected.new" class="form-control" :class="{ 'is-invalid': validation.hasError('selected.new')}"
                                             placeholder="Ex: jparedes@gmail.com">
+                                        <div class="text-danger font-weight-bold">{{ validation.firstError('selected.new') }}</div>
                                     </div>
 
                                     <div class="form-group">
@@ -110,8 +111,9 @@
 
                     <div class="form-group">
                         <label for="email" class="font-weight-bold text-muted">Email</label>
-                        <input type="email" id="email" v-model="new_contact" class="form-control"
+                        <input type="email" id="email" v-model="new_contact" class="form-control" :class="{ 'is-invalid': validation.hasError('new_contact')}"
                             placeholder="Ex: jparedes@gmail.com">
+                        <div class="text-danger font-weight-bold">{{ validation.firstError('new_contact') }}</div>
                     </div>
 
                     <div class="form-group">
@@ -125,6 +127,10 @@
 </template>
 
 <script>
+import SimpleVueValidation from 'simple-vue-validator';
+const Validator = SimpleVueValidation.Validator;
+Vue.use(SimpleVueValidation);
+
     export default {
         data() {
             return {
@@ -172,6 +178,23 @@
             this.GetMyContacts();
         },
 
+        validators: {
+            'new_contact': function (value) {
+                return Validator.value(value)
+                    .required()
+                    .minLength(3)
+                    .maxLength(250)
+                    .email();
+            },
+            'selected.new': function (value) {
+                return Validator.value(value)
+                    .required()
+                    .minLength(3)
+                    .maxLength(250)
+                    .email();
+            },
+        },
+
         methods: {
             GetMyContacts() {
                 axios.get('/api/contacts/GetMyContacts')
@@ -183,107 +206,118 @@
                     });
             },
 
-            SaveContact() {
-                var formData = new FormData();
-                formData.append('email', this.new_contact);
+            async SaveContact() {
+                const validation = await this.$validate(['new_contact']);
 
-                axios.post('/api/contacts/SaveContact', formData)
-                    .then(res => {
-                        if (res.status == 200) {
-                            this.contacts.unshift(res.data);
-                            this.providerData.unshift(res.data);
-                            Vue.swal({
-                                icon: 'success',
-                                title: '¡Great!',
-                                text: 'Contact Added Successfully.',
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                            this.new_contact = '';
-                            this.$refs['add_contact'].hide();
-                        }
-                    })
-                    .catch(function (error) {
-                        if (error.response.status == 409) {
-                            Vue.swal({
-                                icon: 'info',
-                                title: '¡Mmm!',
-                                text: 'Looks this contact already has been added to your account before.',
-                                toast: true,
-                                showConfirmButton: false,
-                                position: 'bottom-end',
-                                timer: 3000
-                            });
-                            this.new_contact = '';
-                            this.$refs['add_contact'].hide();
-                        } else {
-                            Vue.swal({
-                                icon: 'info',
-                                title: '¡Mmm!',
-                                text: 'Looks Something went wrong, please reload this tab.',
-                                toast: true,
-                                showConfirmButton: false,
-                                position: 'bottom-end',
-                                timer: 3000
-                            });
-                        }
-                        console.log(error);
-                    });
+                if(validation) {
+
+                    var formData = new FormData();
+                    formData.append('email', this.new_contact);
+
+                    axios.post('/api/contacts/SaveContact', formData)
+                        .then(res => {
+                            if (res.status == 200) {
+                                this.contacts.unshift(res.data);
+                                this.providerData.unshift(res.data);
+                                Vue.swal({
+                                    icon: 'success',
+                                    title: '¡Great!',
+                                    text: 'Contact Added Successfully.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                this.new_contact = '';
+                                this.$refs['add_contact'].hide();
+                            }
+                        })
+                        .catch(function (error) {
+                            if (error.response.status == 409) {
+                                Vue.swal({
+                                    icon: 'info',
+                                    title: '¡Mmm!',
+                                    text: 'Looks this contact already has been added to your account before.',
+                                    toast: true,
+                                    showConfirmButton: false,
+                                    position: 'bottom-end',
+                                    timer: 3000
+                                });
+                                this.new_contact = '';
+                                this.$refs['add_contact'].hide();
+                            } else {
+                                Vue.swal({
+                                    icon: 'info',
+                                    title: '¡Mmm!',
+                                    text: 'Looks Something went wrong, please reload this tab.',
+                                    toast: true,
+                                    showConfirmButton: false,
+                                    position: 'bottom-end',
+                                    timer: 3000
+                                });
+                            }
+                            console.log(error);
+                        });
+
+                }
             },
 
-            UpdateContact() {
-                var contact = {
-                    email: this.selected.email,
-                    new_email: this.selected.new,
-                }
+            async UpdateContact() {
+                const validate = await this.$validate(['selected.new']);
 
-                axios.put('/api/contacts/UpdateContact', contact)
-                    .then(res => {
-                        if (res.status == 200) {
-                            var index = this.contacts.findIndex(contact => contact.id === this.selected.id);
-                            this.contacts.splice(index, 1);
-                            this.contacts.unshift(res.data);
-                            this.providerData = this.contacts;
-                            Vue.swal({
-                                icon: 'success',
-                                title: '¡Great!',
-                                text: 'Contact Updated Successfully.',
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                            this.selected = {
-                                email: '',
-                                new: '',
-                            };
-                            this.$refs['update_contact'].hide();
-                        }
-                    })
-                    .catch(function (error) {
-                        if (error.response.status == 409) {
-                            Vue.swal({
-                                icon: 'info',
-                                title: '¡Mmm!',
-                                text: 'Looks this contact already has been added to your account before.',
-                                toast: true,
-                                showConfirmButton: false,
-                                position: 'bottom-end',
-                                timer: 3000
-                            });
-                            this.selected = '';
-                            this.$refs['update_contact'].hide();
-                        } else {
-                            Vue.swal({
-                                icon: 'info',
-                                title: '¡Mmm!',
-                                text: 'Looks Something went wrong, please reload this tab.',
-                                toast: true,
-                                showConfirmButton: false,
-                                position: 'bottom-end',
-                                timer: 3000
-                            });
-                        }
-                        console.log(error);
-                    });
+                if(validate) {
+                    var contact = {
+                        email: this.selected.email,
+                        new_email: this.selected.new,
+                    }
+
+                    axios.put('/api/contacts/UpdateContact', contact)
+                        .then(res => {
+                            if (res.status == 200) {
+                                var index = this.contacts.findIndex(contact => contact.id === this.selected.id);
+                                this.contacts.splice(index, 1);
+                                this.contacts.unshift(res.data);
+                                this.providerData = this.contacts;
+                                Vue.swal({
+                                    icon: 'success',
+                                    title: '¡Great!',
+                                    text: 'Contact Updated Successfully.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                this.selected = {
+                                    email: '',
+                                    new: '',
+                                };
+                                this.$refs['update_contact'].hide();
+                            }
+                        })
+                        .catch(function (error) {
+                            if (error.response.status == 409) {
+                                Vue.swal({
+                                    icon: 'info',
+                                    title: '¡Mmm!',
+                                    text: 'Looks this contact already has been added to your account before.',
+                                    toast: true,
+                                    showConfirmButton: false,
+                                    position: 'bottom-end',
+                                    timer: 3000
+                                });
+                                this.selected = '';
+                                this.$refs['update_contact'].hide();
+                            } else {
+                                Vue.swal({
+                                    icon: 'info',
+                                    title: '¡Mmm!',
+                                    text: 'Looks Something went wrong, please reload this tab.',
+                                    toast: true,
+                                    showConfirmButton: false,
+                                    position: 'bottom-end',
+                                    timer: 3000
+                                });
+                            }
+                            console.log(error);
+                        });
+
+                }
             },
 
             DetachContact(contact_id) {

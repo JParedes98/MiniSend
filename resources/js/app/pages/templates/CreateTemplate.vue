@@ -15,8 +15,9 @@
             <div class="row justify-content-center align-items-center mb-3">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label class="text-muted font-weight-bold" for="template.name">Template Name</label>
-                        <input type="text" class="form-control" id="template.name" v-model="template.name" placeholder="Ex: My First Email Template">
+                        <label class="font-weight-bold text-muted" for="template.name">Template Name</label>
+                        <input type="text" class="form-control"  :class="{ 'is-invalid': validation.hasError('template.name')}" id="template.name" v-model="template.name" placeholder="Ex: My First Email Template">
+                        <div class="text-danger font-weight-bold">{{ validation.firstError('template.name') }}</div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -26,8 +27,11 @@
 
             <div class="row justify-content-center mb-5">
                 <div class="col-md-8 col-sm-12">
+                    <label class="font-weight-bold text-muted" for="template.content">Email HTML</label>
+                    <div class="text-danger font-weight-bold">{{ validation.firstError('template.content') }}</div>
                     <TemplateEditor
-                    v-model="template.content"
+                        :class="{ 'is-invalid': validation.hasError('template.content')}"
+                        v-model="template.content"
                         api-key="zewq41kg1hmlckq3auked6txoo916a3e4lrvp8h8a576gxyu" :init="{
                         menubar: true,
                         height: 400,
@@ -50,6 +54,9 @@
 
 <script>
     import Editor from '@tinymce/tinymce-vue';
+    import SimpleVueValidation from 'simple-vue-validator';
+    const Validator = SimpleVueValidation.Validator;
+    Vue.use(SimpleVueValidation);
 
     export default {
         components: {
@@ -107,37 +114,54 @@
             }
         },
 
-        methods: {
-            SaveTemplate() {
-                var formData = new FormData();
-                formData.append('name', this.template.name);
-                formData.append('content', this.template.content);
+        validators: {
+            'template.name': function (value) {
+                return Validator.value(value)
+                    .required()
+                    .minLength(5)
+                    .maxLength(100);
+            },
+            'template.content': function (value) {
+                return Validator.value(value)
+                    .minLength(10);
+            },
+        },
 
-                axios.post('/api/templates/SaveTemplate', formData)
-                    .then(res => {
-                        if (res.status == 200) {
+        methods: {
+            async SaveTemplate() {
+                var validation = await this.$validate();
+
+                if(validation) {
+                    var formData = new FormData();
+                    formData.append('name', this.template.name);
+                    formData.append('content', this.template.content);
+    
+                    axios.post('/api/templates/SaveTemplate', formData)
+                        .then(res => {
+                            if (res.status == 200) {
+                                Vue.swal({
+                                    icon: 'success',
+                                    title: '¡Great!',
+                                    text: 'Template Created Successfully.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                this.$router.push({ name: 'templates' });
+                            }
+                        })
+                        .catch(function (error) {
                             Vue.swal({
-                                icon: 'success',
-                                title: '¡Great!',
-                                text: 'Template Created Successfully.',
+                                icon: 'error',
+                                title: 'Ups!',
+                                text: 'Looks Something went wrong, please reload this tab.',
+                                toast: true,
                                 showConfirmButton: false,
-                                timer: 2000
+                                position: 'bottom-end',
+                                timer: 3000
                             });
-                            this.$router.push({ name: 'templates' });
-                        }
-                    })
-                    .catch(function (error) {
-                        Vue.swal({
-                            icon: 'error',
-                            title: 'Ups!',
-                            text: 'Looks Something went wrong, please reload this tab.',
-                            toast: true,
-                            showConfirmButton: false,
-                            position: 'bottom-end',
-                            timer: 3000
+                            console.log(error);
                         });
-                        console.log(error);
-                    });
+                }
             }
         }
     }

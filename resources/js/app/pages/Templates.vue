@@ -94,7 +94,7 @@
                     .then(res => {
                         if(res.status == 200) {
                             this.templates.splice(index, 1);
-                            this.providerData.splice(index, 1);
+                            this.providerData = this.templates;
                             Vue.swal({
                                 icon: 'success',
                                 title: '¡Great!',

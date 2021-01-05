@@ -25,16 +25,24 @@
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <label class="text-muted font-weight-bold" for="mail.recipient">To</label>
-                    <input type="text" class="form-control" id="mail.recipient" v-model="mail.recipient"
-                        placeholder="Ex: jparedes@gmail.com">
+                    <b-form-input type="text" :class="{ 'is-invalid': validation.hasError('mail.recipient')}"
+                        id="mail.recipient" v-model="mail.recipient" list="contacts-list"
+                        placeholder="Ex: jparedes@gmail.com"></b-form-input>
+                    <div class="text-danger font-weight-bold">{{ validation.firstError('mail.recipient') }}</div>
+
+                    <datalist id="contacts-list">
+                        <option v-for="contact in contacts" :key="contact.id">{{ contact.email }}</option>
+                    </datalist>
                 </div>
             </div>
 
             <div class="row justify-content-center mb-5">
                 <div class="col-md-4 col-sm-12">
                     <label class="text-muted font-weight-bold" for="mail.subject">Subject</label>
-                    <input type="text" class="form-control" id="mail.subject" v-model="mail.subject"
-                        placeholder="Ex: Welcome Mail">
+                    <input type="text" class="form-control"
+                        :class="{ 'is-invalid': validation.hasError('mail.subject')}" id="mail.subject"
+                        v-model="mail.subject" placeholder="Ex: Welcome Mail">
+                    <div class="text-danger font-weight-bold">{{ validation.firstError('mail.subject') }}</div>
                 </div>
 
                 <div class="col-md-4 col-sm-12">
@@ -43,9 +51,21 @@
                 </div>
             </div>
 
+            <div class="row justify-content-center align-items-center mb-3">
+                <div class="col-md-8 col-sm-12">
+                    <label class="font-weight-bold text-muted" for="mail.text">Text message</label>
+                    <b-form-textarea id="mail.text" v-model="mail.text"
+                        :class="{ 'is-invalid': validation.hasError('mail.text')}"
+                        placeholder="Type your Text Message here..." rows="3"></b-form-textarea>
+                    <div class="text-danger font-weight-bold">{{ validation.firstError('mail.text') }}</div>
+                </div>
+            </div>
+
             <div class="row justify-content-center">
                 <div class="col-md-8 col-sm-12">
+                    <div class="text-danger font-weight-bold">{{ validation.firstError('mail.template.content') }}</div>
                     <TemplateEditor v-model="mail.template.content"
+                        :class="{ 'is-invalid': validation.hasError('mail.template.content')}"
                         api-key="zewq41kg1hmlckq3auked6txoo916a3e4lrvp8h8a576gxyu" :init="{
                         menubar: true,
                         height: 400,
@@ -65,7 +85,8 @@
 
             <div class="row justify-content-center mt-3 mb-5">
                 <div class="col-md-8">
-                    <b-button @click="SaveAndSendEmail()" pill variant="primary" class="float-right">SEND EMAIL</b-button>
+                    <b-button @click="SaveAndSendEmail()" pill variant="primary" class="float-right">SEND EMAIL
+                    </b-button>
                 </div>
             </div>
 
@@ -110,6 +131,9 @@
 
 <script>
     import Editor from '@tinymce/tinymce-vue';
+    import SimpleVueValidation from 'simple-vue-validator';
+    const Validator = SimpleVueValidation.Validator;
+    Vue.use(SimpleVueValidation);
 
     export default {
         components: {
@@ -136,6 +160,32 @@
             this.GetMyContacts();
         },
 
+        validators: {
+            'mail.subject': function (value) {
+                return Validator.value(value)
+                    .required()
+                    .minLength(3)
+                    .maxLength(250);
+            },
+            'mail.text': function (value) {
+                return Validator.value(value)
+                    .minLength(3)
+                    .maxLength(250);
+            },
+            'mail.template.content': function (value) {
+                return Validator.value(value)
+                    .required()
+                    .minLength(3);
+            },
+            'mail.recipient': function (value) {
+                return Validator.value(value)
+                    .required()
+                    .email()
+                    .minLength(3)
+                    .maxLength(250);
+            },
+        },
+
         methods: {
             GetMyTemplates() {
                 axios.get('/api/templates/GetMyTemplates')
@@ -158,38 +208,44 @@
                     });
             },
 
-            SaveAndSendEmail() {
-                var formData = new FormData();
-                formData.append('subject', this.mail.subject);
-                formData.append('text', this.mail.texts);
-                formData.append('html', this.mail.template.content);
-                formData.append('recipient', this.mail.recipient);
+            async SaveAndSendEmail() {
+                var validation = await this.$validate();
 
-                axios.post('/api/emails/SaveAndSendEmail', formData)
-                    .then(res => {
-                        if (res.status == 200) {
+                if (validation) {
+                    var formData = new FormData();
+                    formData.append('subject', this.mail.subject);
+                    formData.append('text', this.mail.text);
+                    formData.append('html', this.mail.template.content);
+                    formData.append('recipient', this.mail.recipient);
+
+                    axios.post('/api/emails/SaveAndSendEmail', formData)
+                        .then(res => {
+                            if (res.status == 200) {
+                                Vue.swal({
+                                    icon: 'success',
+                                    title: '¡Great!',
+                                    text: 'Mail Sent Successfully.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                this.$router.push({
+                                    name: 'emails'
+                                });
+                            }
+                        })
+                        .catch(function (error) {
                             Vue.swal({
-                                icon: 'success',
-                                title: '¡Great!',
-                                text: 'Mail Sent Successfully.',
+                                icon: 'error',
+                                title: 'Ups!',
+                                text: 'Looks Something went wrong, please reload this tab.',
+                                toast: true,
                                 showConfirmButton: false,
-                                timer: 2000
+                                position: 'bottom-end',
+                                timer: 3000
                             });
-                            this.$router.push({ name: 'emails' });
-                        }
-                    })
-                    .catch(function (error) {
-                        Vue.swal({
-                            icon: 'error',
-                            title: 'Ups!',
-                            text: 'Looks Something went wrong, please reload this tab.',
-                            toast: true,
-                            showConfirmButton: false,
-                            position: 'bottom-end',
-                            timer: 3000
+                            console.log(error);
                         });
-                        console.log(error);
-                    });
+                }
             }
         }
     }
